@@ -2,7 +2,7 @@
 
 namespace RSSI_webAPI.Controllers;
 
-[Route("rssi")]
+[Route("home")]
 public class AboutController : Controller
 {
     [HttpGet]

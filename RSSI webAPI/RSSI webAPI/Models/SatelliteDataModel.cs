@@ -7,4 +7,5 @@ public class SatelliteDataModel
     public double BxGSM { get; set; }
     public double ByGSM { get; set; }
     public double BzGSM { get; set; }
+    public string? Error { get; set; }
 }

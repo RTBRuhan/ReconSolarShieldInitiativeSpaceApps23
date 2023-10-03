@@ -1,26 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using RSSI_webAPI.Models.DtoModels;
 using RSSI_webAPI.Repositories.Contracts;
 
 namespace RSSI_webAPI.Controllers;
 
-[Route("api")]
+[Route("api/[controller]")]
 [ApiController]
 public class SatelliteDataController : ControllerBase
 {
+    private readonly IMapper _automap;
     private readonly ISatelliteDataRepository _repository;
-    public SatelliteDataController(ISatelliteDataRepository repository)
+    public SatelliteDataController(ISatelliteDataRepository repository,IMapper mp)
     {
+        _automap = mp;
         _repository = repository;
     }
 
-    [HttpGet("version")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult Index()
-    {
-        return Ok("web API - v 1.0.0");
-    }
-
-    [HttpGet("data/dscovr")]
+    [HttpGet("dscovr")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -31,10 +28,10 @@ public class SatelliteDataController : ControllerBase
             return NoContent();
         if (data.Error != null)
             return StatusCode(500, new { message = "Internal Server Error", error = data.Error });
-        return Ok(data);
+        return Ok(_automap.Map<SatelliteDataDtoModel>(data));
     }
 
-    [HttpGet("data/ace")]
+    [HttpGet("ace")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -45,6 +42,6 @@ public class SatelliteDataController : ControllerBase
             return NoContent();
         if (data.Error != null)
             return StatusCode(500, new { message = "Internal Server Error", error = data.Error });
-        return Ok(data);
+        return Ok(_automap.Map<SatelliteDataDtoModel>(data));
     }
 }

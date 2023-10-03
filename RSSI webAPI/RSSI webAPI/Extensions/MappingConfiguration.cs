@@ -1,5 +1,14 @@
-﻿namespace RSSI_webAPI.Extensions;
+﻿using AutoMapper;
+using RSSI_webAPI.Models;
+using RSSI_webAPI.Models.DtoModels;
 
-public class MappingConfiguration
+namespace RSSI_webAPI.Extensions;
+
+public class MappingConfiguration : Profile
 {
+    public MappingConfiguration()
+    {
+        CreateMap<SatelliteDataModel, SatelliteDataDtoModel>()
+            .ReverseMap();
+    }
 }

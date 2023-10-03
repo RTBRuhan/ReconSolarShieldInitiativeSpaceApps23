@@ -1,3 +1,4 @@
+using RSSI_webAPI.Extensions;
 using RSSI_webAPI.Repositories;
 using RSSI_webAPI.Repositories.Contracts;
 
@@ -13,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ISatelliteDataRepository, SatelliteDataRepository>();
+builder.Services.AddScoped<IEarthDataRepository,EarthDataRepository>();
+builder.Services.AddAutoMapper(typeof(MappingConfiguration));
 
 var app = builder.Build();
 

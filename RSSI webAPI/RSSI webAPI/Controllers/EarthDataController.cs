@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RSSI_webAPI.Authorization;
 using RSSI_webAPI.Repositories.Contracts;
 
 namespace RSSI_webAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ServiceFilter(typeof(AuthFilter))]
 public class EarthDataController : ControllerBase
 {
     private readonly IMapper _automap;
@@ -20,7 +22,9 @@ public class EarthDataController : ControllerBase
     [HttpGet("geomagnet/l1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
     public async Task<ActionResult> GetGeoMagneticData()
     {
         var data = await _repository.GetGeoMagneticDataAtLagrangianPointOne();

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RSSI_webAPI.Authorization;
 using RSSI_webAPI.Models.DtoModels;
 using RSSI_webAPI.Repositories.Contracts;
 
@@ -7,6 +8,7 @@ namespace RSSI_webAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ServiceFilter(typeof(AuthFilter))]
 public class SatelliteDataController : ControllerBase
 {
     private readonly IMapper _automap;
@@ -20,6 +22,7 @@ public class SatelliteDataController : ControllerBase
     [HttpGet("dscovr")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> GetDscovrData()
     {
@@ -34,6 +37,7 @@ public class SatelliteDataController : ControllerBase
     [HttpGet("ace")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> GetAceData()
     {

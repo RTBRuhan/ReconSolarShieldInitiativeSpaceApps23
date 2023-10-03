@@ -19,6 +19,9 @@ builder.Services.AddAutoMapper(typeof(MappingConfiguration));
 
 var app = builder.Build();
 
+// Configure CORS policy
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 // HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

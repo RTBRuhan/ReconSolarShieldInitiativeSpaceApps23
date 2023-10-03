@@ -55,8 +55,8 @@ public class EarthDataRepository : IEarthDataRepository
                         Vertical = fieldValue["vertical-intensity"]["value"].ToObject<double>(),
                         Horizontal = fieldValue["horizontal-intensity"]["value"].ToObject<double>(),
                         Time = date,
-                        Latitude = northMagPoleLat,
                         Longitude = northMagPoleLon,
+                        Latitude = northMagPoleLat,
                         Altitude = 0.00
                     };
 

@@ -4,6 +4,7 @@ using RSSI_webAPI.Repositories;
 using RSSI_webAPI.Repositories.Contracts;
 using RSSI_webAPI.Authorization;
 using Microsoft.OpenApi.Models;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,8 +51,18 @@ builder.Services.AddScoped<AuthFilter>();
 
 var app = builder.Build();
 
+
+// Check appsettings.json
+string? client = builder.Configuration.GetSection("Urls").GetValue<string>("Client");
+string? sclient = builder.Configuration.GetSection("Urls").GetValue<string>("Secureclient");
+
 // Configure CORS policy
-app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseCors(options => 
+    options.AllowAnyOrigin()
+    // .WithOrigins(client, sclient)
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType)
+);
 
 // HTTP request pipeline.
 if (app.Environment.IsDevelopment())

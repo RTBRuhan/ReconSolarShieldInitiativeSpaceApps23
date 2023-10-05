@@ -13,7 +13,7 @@ public class EarthDataRepository : IEarthDataRepository
         _log = lg;
         _client = cf.CreateClient();
     }
-    public async Task<GeoMagnetDataModel?> GetGeoMagneticDataAtLagrangianPointOne()
+    public async Task<GeoMagnetDataModel?> GetGeoMagneticDataFromBGS()
     {
         GeoMagnetDataModel? data = null;
 
@@ -61,6 +61,49 @@ public class EarthDataRepository : IEarthDataRepository
                     };
 
                 }
+            }
+
+        }
+
+        return data;
+    }
+
+    public async Task<GeoMagnetDataModel?> GetGeoMagneticDataFromNCIE()
+    {
+        GeoMagnetDataModel? data = null;
+
+        double northMagPoleLat = 86.50;
+        double northMagPoleLon = 164.04;
+        var date = DateTime.UtcNow.AddHours(-6);
+
+        string url = $"https://www.ngdc.noaa.gov/geomag-web/calculators/calculateIgrfwmm?lat1={northMagPoleLat}&lon1={northMagPoleLon}&model=WMM&startYear={date.Year}&endYear={date.Year}&key=EAU2y&resultFormat=json";
+
+        HttpResponseMessage response = await _client.GetAsync(url);
+
+        if (response.IsSuccessStatusCode)
+        {
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            JObject jsonObject = JObject.Parse(responseBody);
+
+            JToken? result = jsonObject["result"]?.FirstOrDefault();
+
+            if (result != null)
+            {
+                data = new GeoMagnetDataModel
+                {
+                    Time = date,
+                    Latitude = result["latitude"].ToObject<double>(),
+                    Longitude = result["longitude"].ToObject<double>(),
+                    Altitude = result["elevation"].ToObject<double>(),
+                    Intensity = result["totalintensity"].ToObject<double>(),
+                    Declination = result["declination"].ToObject<double>(),
+                    Inclination = result["inclination"].ToObject<double>(),
+                    North = result["xcomponent"].ToObject<double>(),
+                    East = result["ycomponent"].ToObject<double>(),
+                    Vertical = result["zcomponent"].ToObject<double>(),
+                    Horizontal = result["horintensity"].ToObject<double>()
+                };
             }
 
         }

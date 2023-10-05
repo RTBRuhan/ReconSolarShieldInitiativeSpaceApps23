@@ -12,8 +12,7 @@ public class AuthFilter : IAuthorizationFilter
     }
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        if (!context.HttpContext.Request.Headers.TryGetValue(AuthConstants.ApiKeyHeaderName,
-    out var extractedApiKey))
+        if (!context.HttpContext.Request.Headers.TryGetValue(AuthConstants.ApiKeyHeaderName,out var extractedApiKey))
         {
             context.Result = new UnauthorizedObjectResult("Api key missing!");
             return;

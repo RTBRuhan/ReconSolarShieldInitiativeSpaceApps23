@@ -19,17 +19,32 @@ public class EarthDataController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("geomagnet/l1")]
+    [HttpGet("geomagnet/ncie")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-    public async Task<ActionResult> GetGeoMagneticData()
+    public async Task<ActionResult> GetGeoMagneticDataNCIE()
     {
-        var data = await _repository.GetGeoMagneticDataAtLagrangianPointOne();
+        var data = await _repository.GetGeoMagneticDataFromNCIE();
         if (data == null)
             return NoContent();
         return Ok(data);
     }
+
+    [HttpGet("geomagnet/bgs")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<ActionResult> GetGeoMagneticDataBGS()
+    {
+        var data = await _repository.GetGeoMagneticDataFromBGS();
+        if (data == null)
+            return NoContent();
+        return Ok(data);
+    }
+
 }

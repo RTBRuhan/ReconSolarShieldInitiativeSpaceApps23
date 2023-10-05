@@ -19,7 +19,7 @@ public class EarthDataController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("geomagnet/ncie")]
+    [HttpGet("ncie")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -33,7 +33,7 @@ public class EarthDataController : ControllerBase
         return Ok(data);
     }
 
-    [HttpGet("geomagnet/bgs")]
+    [HttpGet("bgs")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

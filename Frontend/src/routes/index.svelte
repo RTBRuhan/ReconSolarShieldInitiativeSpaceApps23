@@ -29,7 +29,7 @@
 
 <main class="container">
     <div class="navbar">
-        <h1>Recon Solar Shield</h1>
+        <h1>Recon Solar Shield Initiative</h1>
         <div class="navbar-buttons">
             <!-- Link to show the Home component -->
             <button

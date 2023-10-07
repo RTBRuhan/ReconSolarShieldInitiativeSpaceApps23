@@ -73,10 +73,6 @@ To get started with the project, follow these steps:
 3.  npm install rollup
 4.  npm run dev
 
-## Usage
-
-Provide instructions on how to use your platform, including any configuration settings and examples.
-
 ## Data Sources
 
 - [ACE-Satellite Data](https://science.nasa.gov/mission/ace/)

@@ -1,13 +1,3 @@
-# Recon Solar Shield Initiative SpaceApps23
-
-
-
-
-Recon Solar Shield Initiative - Team SolarSentinel - Magnetic Reconnection - Space Apps Challenge '23
-
-
-
-
 # Satellite Data Analysis and Visualization for Predicting Magnetic Reconnection
 
 <img src="https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/pro_logo.png" width="100">
@@ -17,7 +7,6 @@ Recon Solar Shield Initiative - Team SolarSentinel - Magnetic Reconnection - Spa
 - [Introduction](#introduction)
 - [Features](#features)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
 - [Data Sources](#data-sources)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
@@ -61,6 +50,8 @@ With the help of our AI model we are predicting these values
 - **Solar Wind Data:** Easily access crucial solar wind data for monitoring space weather conditions.
 
 - **Magnetosphere Insights:** Visualize and analyze Earth's magnetosphere in response to solar activity.
+  
+- **Automated Twitter Bot** Sending Post In Twitter Through Our Social Media Platform
 
 - **Interactive User Interface:** An intuitive web-based interface built with SvelteKit for exploring and visualizing satellite data.
 
@@ -84,6 +75,10 @@ To get started with the project, follow these steps:
 - ASP.NET: Utilized for the REST API that powers data retrieval and processing.
 - Automated Machine Learning: Employed for predictive modeling.
 - MongoDB: Our database for storing and retrieving satellite and prediction data.
+
+## API EndPoints
+
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p5.png)
 
 ## Contributing
 

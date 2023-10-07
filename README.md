@@ -79,8 +79,8 @@ Provide instructions on how to use your platform, including any configuration se
 
 ## Data Sources
 
-- [ACE-Satellite Data](link_to_ACE_data_source)
-- [DSCOVR Data](link_to_DSCOVR_data_source)
+- [ACE-Satellite Data](https://science.nasa.gov/mission/ace/)
+- [DSCOVR Data](https://www.nesdis.noaa.gov/current-satellite-missions/currently-flying/dscovr-deep-space-climate-observatory)
 
 ## Technologies Used
 

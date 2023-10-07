@@ -1,8 +1,17 @@
 # Recon Solar Shield Initiative SpaceApps23
+
+
+
+
 Recon Solar Shield Initiative - Team SolarSentinel - Magnetic Reconnection - Space Apps Challenge '23
+
+
+
+
 # Satellite Data Analysis and Visualization for Predicting Magnetic Reconnection
 
-![Project Logo/Visual](link_to_project_logo.png)
+<img src="https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/pro_logo.png" width="100">
+
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -18,7 +27,30 @@ Recon Solar Shield Initiative - Team SolarSentinel - Magnetic Reconnection - Spa
 
 Welcome to the Satellite Data Analysis and Visualization project! Our platform leverages data from the ACE-Satellite and DSCOVR satellite missions to provide real-time predictions and insights into magnetic reconnection events, solar activity, and their impact on Earth.
 
-![Screenshot of the Web Interface](link_to_screenshot.png)
+### Home Page
+
+Analysing the earth and data given by the satellites of the sun and detecting magnetic reconnection
+
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p1.png)
+
+### Visualization Chart
+
+Showing the temperature, magnetometer, earth orientation and position data 
+
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p3.png)
+
+
+With the help of our AI model we are predicting these values
+
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p2.png)
+
+
+### Click on the satellite buttons and see the information being shown by the different satellites and predictions made by their data
+
+
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p4.png)
+
+
 
 ## Features
 
@@ -56,7 +88,6 @@ Provide instructions on how to use your platform, including any configuration se
 - ASP.NET: Utilized for the REST API that powers data retrieval and processing.
 - Automated Machine Learning: Employed for predictive modeling.
 - MongoDB: Our database for storing and retrieving satellite and prediction data.
-- [Additional Technologies]
 
 ## Contributing
 

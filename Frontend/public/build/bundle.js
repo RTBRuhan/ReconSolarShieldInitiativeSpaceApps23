@@ -20950,9 +20950,9 @@ var app = (function () {
     			t5 = text(t5_value);
     			t6 = space();
     			attr_dev(strong, "class", "svelte-kk0uqg");
-    			add_location(strong, file$1, 59, 20, 1769);
+    			add_location(strong, file$1, 59, 20, 1780);
     			attr_dev(li, "class", "svelte-kk0uqg");
-    			add_location(li, file$1, 58, 16, 1744);
+    			add_location(li, file$1, 58, 16, 1755);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -21095,7 +21095,7 @@ var app = (function () {
     			main = element("main");
     			div1 = element("div");
     			h1 = element("h1");
-    			h1.textContent = "Recon Solar Shield";
+    			h1.textContent = "Recon Solar Shield Initiative";
     			t1 = space();
     			div0 = element("div");
     			button0 = element("button");
@@ -21126,22 +21126,22 @@ var app = (function () {
     			set_style(button0, "color", "#ffcc00");
     			set_style(button0, "cursor", "pointer");
     			attr_dev(button0, "class", "svelte-kk0uqg");
-    			add_location(button0, file$1, 34, 12, 999);
+    			add_location(button0, file$1, 34, 12, 1010);
     			set_style(button1, "background-color", "#444");
     			set_style(button1, "font-size", "20px");
     			set_style(button1, "color", "#ffcc00");
     			set_style(button1, "cursor", "pointer");
     			attr_dev(button1, "class", "svelte-kk0uqg");
-    			add_location(button1, file$1, 43, 12, 1299);
+    			add_location(button1, file$1, 43, 12, 1310);
     			attr_dev(div0, "class", "navbar-buttons svelte-kk0uqg");
-    			add_location(div0, file$1, 32, 8, 905);
+    			add_location(div0, file$1, 32, 8, 916);
     			attr_dev(div1, "class", "navbar svelte-kk0uqg");
     			add_location(div1, file$1, 30, 4, 840);
-    			add_location(h2, file$1, 54, 8, 1636);
+    			add_location(h2, file$1, 54, 8, 1647);
     			attr_dev(ul, "class", "svelte-kk0uqg");
-    			add_location(ul, file$1, 56, 8, 1676);
+    			add_location(ul, file$1, 56, 8, 1687);
     			attr_dev(section, "class", "sat-info");
-    			add_location(section, file$1, 53, 4, 1601);
+    			add_location(section, file$1, 53, 4, 1612);
     			attr_dev(main, "class", "container svelte-kk0uqg");
     			add_location(main, file$1, 29, 0, 811);
     		},

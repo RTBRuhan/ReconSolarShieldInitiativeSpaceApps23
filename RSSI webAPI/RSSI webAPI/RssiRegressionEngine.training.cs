@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML.Data;
-using Microsoft.ML.Trainers.LightGbm;
+using Microsoft.ML.Trainers.FastTree;
 using Microsoft.ML.Trainers;
 using Microsoft.ML;
 
@@ -13,7 +13,7 @@ namespace RSSI_webAPI
 {
     public partial class RssiRegressionEngine
     {
-        public const string RetrainFilePath =  @"D:\Space Apps Challenge\2023\Recon-Solar-Shield-Initiative\RSSI webAPI\RSSI webAPI\BtRegressionTrainingData.csv";
+        public const string RetrainFilePath =  @"D:\Space Apps Challenge\2023\ReconSolarShieldInitiativeSpaceApps23\RSSI webAPI\RSSI webAPI\BtRegressionTrainingData.csv";
         public const char RetrainSeparatorChar = ',';
         public const bool RetrainHasHeader =  true;
 
@@ -92,7 +92,7 @@ namespace RSSI_webAPI
             // Data process configuration with pipeline data transformations
             var pipeline = mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"year", @"year"),new InputOutputColumnPair(@"month", @"month"),new InputOutputColumnPair(@"bx_gsm", @"bx_gsm"),new InputOutputColumnPair(@"by_gsm", @"by_gsm"),new InputOutputColumnPair(@"bz_gsm", @"bz_gsm"),new InputOutputColumnPair(@"intensity", @"intensity"),new InputOutputColumnPair(@"declination", @"declination"),new InputOutputColumnPair(@"inclination", @"inclination"),new InputOutputColumnPair(@"north", @"north"),new InputOutputColumnPair(@"east", @"east"),new InputOutputColumnPair(@"vertical", @"vertical"),new InputOutputColumnPair(@"horizontal", @"horizontal")})      
                                     .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"year",@"month",@"bx_gsm",@"by_gsm",@"bz_gsm",@"intensity",@"declination",@"inclination",@"north",@"east",@"vertical",@"horizontal"}))      
-                                    .Append(mlContext.Regression.Trainers.LightGbm(new LightGbmRegressionTrainer.Options(){NumberOfLeaves=4,NumberOfIterations=4,MinimumExampleCountPerLeaf=20,LearningRate=1,LabelColumnName=@"bt",FeatureColumnName=@"Features",ExampleWeightColumnName=null,Booster=new GradientBooster.Options(){SubsampleFraction=1,FeatureFraction=1,L1Regularization=2E-10,L2Regularization=1},MaximumBinCountPerFeature=254}));
+                                    .Append(mlContext.Regression.Trainers.FastForest(new FastForestRegressionTrainer.Options(){NumberOfTrees=4,NumberOfLeaves=4,FeatureFraction=1F,LabelColumnName=@"bt",FeatureColumnName=@"Features"}));
 
             return pipeline;
         }

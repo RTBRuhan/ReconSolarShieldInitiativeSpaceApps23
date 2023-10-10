@@ -1,22 +1,31 @@
-﻿namespace RSSI_webAPI.Models;
+﻿
+namespace RSSI_webAPI.Models;
 
 public class SupervisedDataModel
 {
+    [System.ComponentModel.DataAnnotations.Key]
+    public int Id { get; set; }
+    
     // Time
     public int Year { get; set; }
     public int Month { get; set; }
     // Satellite
-    public double BxGSM { get; set; }
-    public double ByGSM { get; set; }
-    public double BzGSM { get; set; }
+    [System.ComponentModel.DataAnnotations.Required]
+    public float BxGSM { get; set; }
+
+    [System.ComponentModel.DataAnnotations.Required]
+    public float ByGSM { get; set; }
+
+    [System.ComponentModel.DataAnnotations.Required]
+    public float BzGSM { get; set; }
     // Target
-    public double Bt { get; set; }
+    public float Bt { get; set; }
     // Geo-magnetism
-    public double Intensity { get; set; }
-    public double Declination { get; set; }
-    public double Inclination { get; set; }
-    public double North { get; set; }
-    public double East { get; set; }
-    public double Vertical { get; set; }
-    public double Horizontal { get; set; }
+    public float Intensity { get; set; }
+    public float Declination { get; set; }
+    public float Inclination { get; set; }
+    public float North { get; set; }
+    public float East { get; set; }
+    public float Vertical { get; set; }
+    public float Horizontal { get; set; }
 }

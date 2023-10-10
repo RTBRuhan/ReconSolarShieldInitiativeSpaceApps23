@@ -68,7 +68,7 @@ public class EarthDataRepository : IEarthDataRepository
         return data;
     }
 
-    public async Task<GeoMagnetDataModel?> GetGeoMagneticDataFromNCIE()
+    public async Task<GeoMagnetDataModel?> GetGeoMagneticDataFromNCEI()
     {
         GeoMagnetDataModel? data = null;
 

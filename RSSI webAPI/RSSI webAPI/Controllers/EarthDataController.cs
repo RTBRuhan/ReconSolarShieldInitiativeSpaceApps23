@@ -19,15 +19,15 @@ public class EarthDataController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("ncie")]
+    [HttpGet("ncei")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-    public async Task<ActionResult> GetGeoMagneticDataNCIE()
+    public async Task<ActionResult> GetGeoMagneticDataNCEI()
     {
-        var data = await _repository.GetGeoMagneticDataFromNCIE();
+        var data = await _repository.GetGeoMagneticDataFromNCEI();
         if (data == null)
             return NoContent();
         return Ok(data);

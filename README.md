@@ -1,6 +1,6 @@
 # Satellite Data Analysis and Visualization for Predicting Magnetic Reconnection
 
-<img src="https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/pro_logo.png" width="100">
+<img src="https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/pro_logo.png" width="100">
 
 
 ## Table of Contents
@@ -20,24 +20,24 @@ Welcome to the Satellite Data Analysis and Visualization project! Our platform l
 
 Analysing the earth and data given by the satellites of the sun and detecting magnetic reconnection
 
-![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p1.png)
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/p1.png)
 
 ### Visualization Chart
 
 Showing the temperature, magnetometer, earth orientation and position data 
 
-![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p3.png)
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/p3.png)
 
 
 With the help of our AI model we are predicting these values
 
-![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p2.png)
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/p2.png)
 
 
 ### Click on the satellite buttons and see the information being shown by the different satellites and predictions made by their data
 
 
-![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p4.png)
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/p4.png)
 
 
 
@@ -78,7 +78,7 @@ To get started with the project, follow these steps:
 
 ## API EndPoints
 
-![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/front-end/project_images/p5.png)
+![Screenshot of the Web Interface](https://github.com/mdjannatulnayem/ReconSolarShieldInitiativeSpaceApps23/blob/main/Frontend/project_images/p5.png)
 
 ## Contributing
 

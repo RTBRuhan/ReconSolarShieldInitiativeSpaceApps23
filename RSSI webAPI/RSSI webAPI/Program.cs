@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using RSSI_webAPI.Authorization;
 using RSSI_webAPI.Data;
@@ -55,20 +54,19 @@ builder.Services.AddScoped<IEarthDataRepository,EarthDataRepository>();
 builder.Services.AddAutoMapper(typeof(MappingConfiguration));
 builder.Services.AddScoped<AuthFilter>();
 
-var app = builder.Build();
-
-
 // Check appsettings.json
 string? client = builder.Configuration.GetSection("Urls").GetValue<string>("Client");
 string? sclient = builder.Configuration.GetSection("Urls").GetValue<string>("Secureclient");
 
+
 // Configure CORS policy
-app.UseCors(options => 
-    options.AllowAnyOrigin()
-    // .WithOrigins(client, sclient)
-    .AllowAnyMethod()
-    .WithHeaders(HeaderNames.ContentType)
-);
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", build => {
+    build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+}));
+
+var app = builder.Build();
+
+
 
 // HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -78,6 +76,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("corspolicy");
 
 // app.UseMiddleware<AuthMiddleware>();
 

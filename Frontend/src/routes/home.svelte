@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import { Chart } from "chart.js/auto";
 
-    const apiKey = "1202a311-b72c-4c0c-87fb-48cd908723c1";
+    const apiKey = "replace-it-with-the-api-key";
     const apiBaseUrl = "https://app-rssi-api-eastus-dev-001.azurewebsites.net";
     //const apiBaseUrl = "https://localhost:7095";
     // Common API key for both endpoints

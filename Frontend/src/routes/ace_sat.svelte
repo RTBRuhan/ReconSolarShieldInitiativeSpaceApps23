@@ -3,7 +3,7 @@
 <script>
     import { onMount } from "svelte";
 
-    const apiKey = "1202a311-b72c-4c0c-87fb-48cd908723c1";
+    const apiKey = "replace-it-with-the-api-key";
     const baseApiUrl = "https://app-rssi-api-eastus-dev-001.azurewebsites.net";
     // const baseApiUrl = "https://localhost:7095";
     const earthApiUrl = baseApiUrl + "/api/earthdata/ncei";

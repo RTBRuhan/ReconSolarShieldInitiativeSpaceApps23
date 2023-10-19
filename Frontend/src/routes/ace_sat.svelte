@@ -1,47 +1,75 @@
 <!-- src/routes/dis_sat.svelte -->
 
+<script>
+    import { onMount } from "svelte";
+
+    const apiKey = "1202a311-b72c-4c0c-87fb-48cd908723c1";
+    const baseApiUrl = "https://app-rssi-api-eastus-dev-001.azurewebsites.net";
+    // const baseApiUrl = "https://localhost:7095";
+    const earthApiUrl = baseApiUrl + "/api/earthdata/ncei";
+    const solarWindApiUrl = baseApiUrl + "/api/satellitedata/ace"
+
+    let earthData = {};
+    let solarWindData = {};
+
+    // Function to fetch Earth data from the API
+    async function fetchEarthData() {
+        console.log("Fetching solar wind data.");
+        const response = await fetch(earthApiUrl, {
+            headers: {
+                "x-api-key": `${apiKey}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            earthData = await response.json();
+        } else {
+            console.error("Failed to fetch Earth data from the API.");
+        }
+    }
+
+    // Function to fetch Sun data from the API
+    async function fetchSolarWindData() {
+        console.log("Fetching solar wind data from ACE.");
+        const response = await fetch(solarWindApiUrl, {
+            headers: {
+                "x-api-key": `${apiKey}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            solarWindData = await response.json();
+        } else {
+            console.error("Failed to fetch Sun data from the API.");
+        }
+    }
+
+    onMount(async () => {
+        // Fetch Earth and Sun data 
+        // when the component is mounted
+        await fetchEarthData();
+        await fetchSolarWindData();
+        // Fetch solar wind dat every 10s
+        setInterval(fetchSolarWindData,10000);
+    });
+</script>
+
 <main class="dis-sat-container">
     <!-- Left Floating Items -->
 
     <div style=" font-size:18px" class="left-float">
-        <h4>Sun Data</h4>
-        <div class="status-icon">
-            <span class="square" />
-            <span class="status-label">Temperature:</span>
-            <span class="status-text">
-                <span class="temperature-value">3.7×10³</span> °C
-            </span>
-        </div>
-
-        <div class="status-icon">
-            <span class="square" />
-            <span class="status-label">Speed:</span>
-            <span class="status-text">
-                <span class="speed-value">30,000</span> m/s
-            </span>
-        </div>
-
-        <div class="status-icon">
-            <span class="square" />
-            <span class="status-label">Proton Density:</span>
-            <span class="status-text">
-                <span class="proton-density-value">3.7×10³</span>
-            </span>
-        </div>
-
-        <div class="status-icon">
-            <span class="square" />
-            <span class="status-label">Approx. Dynamic Pressure:</span>
-            <span class="status-text">
-                <span class="dynamic-pressure-value">2.5 x 10^11</span>
-            </span>
-        </div>
+        <h4>Solar wind
+            <br/>
+            <span style="color: #ffcc00">(ACE)</span>
+        </h4>
 
         <div class="status-icon">
             <span class="square" />
             <span class="status-label">bx_gsm:</span>
             <span class="status-text">
-                <span class="bx-gsm-value">4.2</span>
+                <span class="bx-gsm-value">{solarWindData.bxGSM}</span>
             </span>
         </div>
 
@@ -49,7 +77,7 @@
             <span class="square" />
             <span class="status-label">by_gsm:</span>
             <span class="status-text">
-                <span class="by-gsm-value">3.4</span>
+                <span class="by-gsm-value">{solarWindData.byGSM}</span>
             </span>
         </div>
 
@@ -57,7 +85,7 @@
             <span class="square" />
             <span class="status-label">bz_gsm:</span>
             <span class="status-text">
-                <span class="bz-gsm-value">3.09</span>
+                <span class="bz-gsm-value">{solarWindData.bzGSM}</span>
             </span>
         </div>
 
@@ -65,65 +93,63 @@
             <span class="square" />
             <span class="status-label">bt:</span>
             <span class="status-text">
-                <span class="bt-value">6.08</span>
+                <span class="bt-value">{solarWindData.bt}</span>
             </span>
         </div>
-        <h4>Earth Data</h4>
+
+        <h4>Geo-magnetic field</h4>
+
         <div class="left-float">
-            <div class="status-icon">
-                <span class="square" />
-                <span class="status-label">Time:</span>
-                <span class="status-text">2023-10-06T05:26:29.56203752Z</span>
-            </div>
+            
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Latitude:</span>
-                <span class="status-text">86.5</span>
+                <span class="status-text">{earthData.latitude}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Longitude:</span>
-                <span class="status-text">164.04</span>
+                <span class="status-text">{earthData.longitude}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Altitude:</span>
-                <span class="status-text">0</span>
+                <span class="status-text">{earthData.altitude}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Intensity:</span>
-                <span class="status-text">57427.5</span>
+                <span class="status-text">{earthData.intensity}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Declination:</span>
-                <span class="status-text">-83.5</span>
+                <span class="status-text">{earthData.declination}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Inclination:</span>
-                <span class="status-text">89.7</span>
+                <span class="status-text">{earthData.inclination}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">North:</span>
-                <span class="status-text">29.8</span>
+                <span class="status-text">{earthData.north}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">East:</span>
-                <span class="status-text">-262.8</span>
+                <span class="status-text">{earthData.east}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Vertical:</span>
-                <span class="status-text">57426.9</span>
+                <span class="status-text">{earthData.vertical}</span>
             </div>
             <div class="status-icon">
                 <span class="square" />
                 <span class="status-label">Horizontal:</span>
-                <span class="status-text">264.5</span>
+                <span class="status-text">{earthData.horizontal}</span>
             </div>
         </div>
     </div>
@@ -218,20 +244,13 @@
                             </li>
                         </ul>
                     </div>
+
                 </div>
                 <!-- Add the remaining Info Items here -->
-            </div>
-           
+            </div>   
         </div>
-        
     </div>
-    <ul class="additional-data">
-        <li class="triangle">Frequency of magnetic reconnection: --</li>
-        <li class="triangle">Relation between solar activity and Earth season: --</li>
-        <li class="triangle">Relation between solar activity and solar season: --</li>
-        <li class="triangle">Solar winds that are easily accessed: --</li>
-        <li class="triangle">Earth's magnetosphere: --</li>
-    </ul> 
+    
        
 </main>
 
@@ -242,28 +261,9 @@
         justify-content: space-between;
     }
 
-    .additional-data {
-        list-style-type: none; /* Remove default bullets */
-        margin-top: 100px; /* Adjust the margin-top to move the list items down */
-        padding-left: 20px; /* Indent the list items */
-        color: #fff; /* Text color */
-    }
-
-    .additional-data li::before {
-        content: "▶"; /* Use a triangle sign as a bullet */
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em; /* Adjust the position of the triangle */
-        margin-right: 5px; /* Add spacing between the bullet and text */
-        color: red; /* Set the color to red */
-    }
-
-    .additional-data li {
-        margin-bottom: 15px; /* Adjust the spacing between list items */
-    }
-
     .left-float {
         float: left;
+        min-width: 20%;
         /* Add styles for left floating items */
     }
 

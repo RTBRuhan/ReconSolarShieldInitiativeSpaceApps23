@@ -13,5 +13,6 @@
     <Route path="/" component={Index} />
     <Route path="/home" component={Home} />
     <Route path="/chart" component={VChart} />
+    
   </Router>
 </main>

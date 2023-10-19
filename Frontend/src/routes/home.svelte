@@ -1,78 +1,123 @@
 <!-- src/routes/home.svelte -->
 
 <script>
-    import { Link } from "svelte-routing";
-    import S_Sat from "./s_sat.svelte";
+    import Ace_Sat from "./ace_sat.svelte";
     import Dis_Sat from "./dis_sat.svelte";
     import { onMount } from "svelte";
     import { Chart } from "chart.js/auto";
 
-    let displaySSatellite = false;
+    const apiKey = "1202a311-b72c-4c0c-87fb-48cd908723c1";
+    const apiBaseUrl = "https://app-rssi-api-eastus-dev-001.azurewebsites.net";
+    //const apiBaseUrl = "https://localhost:7095";
+    // Common API key for both endpoints
+    const earthDataApiUrl = apiBaseUrl + "/api/earthdata/ncei";
+    const solarWindDataApiUrl = apiBaseUrl + "/api/satellitedata/dscovr";
+    // Define the API endpoint for posting tweets
+    const tweetApiUrl = apiBaseUrl + "/api/tweets";
+    // Store recoonection event info to DB
+    const dbFeedbackUrl = apiBaseUrl + "/api/BtRegression/feedback";
+
+    let displayACESatellite = false;
     let displayDSCOVRSatellite = false;
 
-    function showSSatellite() {
-        displaySSatellite = true;
+    function showACESatellite() {
+        displayACESatellite = true;
         displayDSCOVRSatellite = false;
     }
 
     function showDSCOVRSatellite() {
-        displaySSatellite = false;
+        displayACESatellite = false;
         displayDSCOVRSatellite = true;
     }
 
-    // Generate dummy data for Earth and Sun variables
-    const earthData = {
-        Time: "2023-10-06T05:26:29.56203752z",
-        Latitude: 86.5,
-        Longitude: 164.04,
-        Altitude: 0,
-        Intensity: 57427.5,
-        Declination: -83.5,
-        Inclination: 89.7,
-        North: 29.8,
-        East: -262.8,
-        Vertical: 57426.9,
-        Horizontal: 26,
-    };
+    let magneticReconnection = false;
 
-    const sunData = {
-        Temperature: 3700, // 3.7×10^3 °C
-        Speed: 30000, // 30,000 m/s
-        ProtonDensity: 3700, // 3.7×10^3
-        ApproxPressure: 2.5e11, // 2.5 x 10^11
-        bx_gsm: 4.2,
-        by_gsm: -3.14,
-        bz_gsm: 3.09,
-        bt: 6.08,
-    };
+    let earthChart;
+    let solarWindChart;
+
+    // Initialize Earth data as an empty object
+    let earthData = {};
+
+    // Initialize Sun data as an empty object
+    let solarWindData = {};
 
     // Convert the Earth and Sun data objects into arrays for chart data
-    const earthLabels = Object.keys(earthData);
-    const earthValues = Object.values(earthData);
+    let earthDataLabels = [];
+    let earthDataValues = [];
+    let solarWindDataLabels = [];
+    let solarWindDataValues = [];
 
-    const sunLabels = Object.keys(sunData);
-    const sunValues = Object.values(sunData);
+    // Chart data for Earth and solar wind
 
-    // Chart data for Earth and Sun
-    const earthChartData = {
-        labels: earthLabels,
+    let earthChartData = {
+        labels: earthDataLabels,
         datasets: [
             {
-                label: "Earth Data",
-                data: earthValues,
+                label: "Vertical",
+                data: earthDataValues[0],
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 2,
                 fill: false,
             },
-        ],
-    };
-
-    const sunChartData = {
-        labels: sunLabels,
-        datasets: [
             {
-                label: "Sun Data",
-                data: sunValues,
+                label: "Latitude",
+                data: earthDataValues[1],
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Longitude",
+                data: earthDataValues[2],
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Altitude",
+                data: earthDataValues[3],
+                borderColor: "rgba(255, 206, 86, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Intensity",
+                data: earthDataValues[4],
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Declination",
+                data: earthDataValues[5],
+                borderColor: "rgba(153, 102, 255, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Inclination",
+                data: earthDataValues[6],
+                borderColor: "rgba(255, 159, 64, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "North",
+                data: earthDataValues[7],
+                borderColor: "rgba(255, 99, 71, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "East",
+                data: earthDataValues[8],
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "Horizontal",
+                data: earthDataValues[9],
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 2,
                 fill: false,
@@ -80,39 +125,305 @@
         ],
     };
 
-    let earthChart;
-    let sunChart;
+    let solarWindChartData = {
+        labels: solarWindDataLabels,
+        datasets: [
+            {
+                label: "bt",
+                data: solarWindDataValues[0],
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "bzGSM",
+                data: solarWindDataValues[1],
+                borderColor: "rgba(255, 206, 86, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "byGSM",
+                data: solarWindDataValues[2],
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: "bxGSM",
+                data: solarWindDataValues[3],
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+            },
+
+        ],
+    };
 
     // Function to check for magnetic reconnection
     function checkMagneticReconnection() {
-        const earthVertical = earthData.Vertical;
-        const sunBzGsm = sunData.bz_gsm;
+        const Vertical = earthData.Vertical;
+        const BzGsm = solarWindData.bzGSM;
 
-        if (earthVertical === sunBzGsm) {
+        if (Vertical === BzGsm && BzGsm < 0) {
+             // Magnetic reconnection detected
             return true;
         } else {
             return false;
         }
     }
 
-    let magneticReconnection = false;
+    async function magneticReconnectionDetectionTweet(){
+        var msg = "Magnetic reconnection detected!";
+        msg += "\n@SpaceApps @NASASocial @NASAEarth";
+        // Create the request body
+        const requestBody = {
+            text : msg,
+        };
 
+        try {
+            const response = await fetch(tweetApiUrl, {
+                method: "POST",
+                headers: {
+                    'x-api-key': `${apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                // Successfully posted the tweet
+                console.log("Tweet posted successfully.");
+            } else {
+                // Handle any errors during the POST request
+                console.error("Failed to post the tweet.");
+            }
+        } catch (error) {
+            // Handle network or fetch errors
+            console.error("Error while posting the tweet:", error);
+        }
+    }
+    
+
+    async function saveReconnectionOccurence(){
+
+        var date = new Date();
+        const requestBody = {
+            bxGSM: solarWindData.bxGSM, 
+            byGSM: solarWindData.byGSM,
+            bzGSM: solarWindData.bzGSM, 
+            bt: solarWindData.bt, 
+            intensity: earthData.intensity, 
+            declination: earthData.declination,
+            inclination: earthData.inclination, 
+            north: earthData.north,
+            east: earthData.east, 
+            vertical: earthData.vertical,
+            horizontal: earthData.horizontal, 
+            year: date.getFullYear(), 
+            month: date.getMonth() + 1, 
+        };
+
+        try {
+            const response = await fetch(dbFeedbackUrl, {
+                method: "POST",
+                headers: {
+                    'x-api-key': `${apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                // Successfully posted the tweet
+                console.log("Saved to DB successfully.");
+            } else {
+                // Handle any errors during the POST request
+                console.error("Failed saving to DB!");
+            }
+        } catch (error) {
+            // Handle network or fetch errors
+            console.error("Error while saving to DB :", error);
+        }
+    }
+
+
+
+    function updateEarthChart(labels,values) {
+        earthChart.data.labels = labels;
+        earthChart.data.datasets[0].data = values;
+        earthChart.update();
+    }
+
+    function updateSolarWindChart(labels,values) {
+        solarWindChart.data.labels = labels;
+        solarWindChart.data.datasets[0].data = values;
+        solarWindChart.update();
+    }
+
+
+    async function fetchEarthData(){
+        // Fetch Earth data
+        try {
+            const earthResponse = await fetch(earthDataApiUrl, {
+                headers: {
+                    'x-api-key': `${apiKey}`,
+                    'content-type': 'application/json',
+                },
+            });
+
+            if (earthResponse.ok) {
+                earthData = await earthResponse.json();
+
+                if(earthDataLabels.length < 10){
+                    earthDataLabels.push("Vertical");
+                    earthDataLabels.push("Latitude");
+                    earthDataLabels.push("Longitude");
+                    earthDataLabels.push("Altitude");
+                    earthDataLabels.push("Intensity");
+                    earthDataLabels.push("Declination");
+                    earthDataLabels.push("Inclination");
+                    earthDataLabels.push("North");
+                    earthDataLabels.push("East");
+                    earthDataLabels.push("Horizontal");
+                }
+
+                earthDataValues.push(earthData.vertical);
+                earthDataValues.push(earthData.latitude);
+                earthDataValues.push(earthData.longitude);
+                earthDataValues.push(earthData.altitude);
+                earthDataValues.push(earthData.intensity);
+                earthDataValues.push(earthData.declination);
+                earthDataValues.push(earthData.inclination);
+                earthDataValues.push(earthData.north);
+                earthDataValues.push(earthData.east);
+                earthDataValues.push(earthData.horizontal);
+                
+
+                // Update the Earth chart with new data
+                updateEarthChart(earthDataLabels,earthDataValues);
+                earthDataValues = [];
+
+                // console.log(earthData);
+            }
+            else {
+                console.error("Failed to fetch Earth data from the API.");
+            }
+        } catch (error) {
+            console.error("Error while fetching Earth data:", error);
+        }
+    }
+
+
+    async function fetchSolarWindData(){
+        // Fetch Solar wind data
+        try {
+            const solarWindResponse = await fetch(solarWindDataApiUrl, {
+                headers: {
+                    'x-api-key': `${apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (solarWindResponse.ok) {
+                solarWindData = await solarWindResponse.json();
+                
+                if(solarWindDataLabels.length < 4){
+                    solarWindDataLabels.push("bt");
+                    solarWindDataLabels.push("bzGSM");
+                    solarWindDataLabels.push("byGSM");
+                    solarWindDataLabels.push("bxGSM");
+                }
+
+                solarWindDataValues.push(solarWindData.bt);
+                solarWindDataValues.push(solarWindData.bzGSM);
+                solarWindDataValues.push(solarWindData.byGSM);
+                solarWindDataValues.push(solarWindData.bxGSM);
+
+                // Update the Sun chart with new data
+                updateSolarWindChart(solarWindDataLabels,solarWindDataValues);
+                solarWindDataValues = [];
+
+                // console.log(solarWindData);
+            } 
+            else {
+                console.error("Failed to fetch solar wind data from the API.");
+            }
+        } catch (error) {
+            console.error("Error while fetching solar wind data:", error);
+        }
+    }
+
+    async function lifeCycleEvent()
+    {
+        // fetch data
+        await fetchEarthData();
+        await fetchSolarWindData();
+
+        // check reconnection
+        magneticReconnection = checkMagneticReconnection();
+
+        // take action
+        if(magneticReconnection)
+        {
+            await saveReconnectionOccurence();
+            await magneticReconnectionDetectionTweet();
+        }
+    }
+
+
+    onMount(async () => {
+        await lifeCycleEvent();
+        // Fetch new data at 10s interval
+        setInterval(lifeCycleEvent, 10000);
+    });
+
+
+    // Initialize solar wind chart
     onMount(() => {
-        // Initialize the Earth chart after the component is mounted
+        const solarWindCanvas = document.getElementById("solarWindChart");
+        solarWindChart = new Chart(solarWindCanvas, {
+            type: "line",
+            data: solarWindChartData,
+            options: {
+                scales: {
+                    x: {
+                        display: true, // Display the X-axis
+                    },
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Solar Wind Data",
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+
         const earthCanvas = document.getElementById("earthChart");
         earthChart = new Chart(earthCanvas, {
             type: "line",
             data: earthChartData,
             options: {
                 scales: {
+                    x: {
+                        display: true, // Display the X-axis
+                    },
                     y: {
                         beginAtZero: true,
+                        display: true, // Display the Y-axis
                     },
                 },
                 plugins: {
                     title: {
                         display: true,
-                        text: "Earth Data",
+                        text: "Geo-magnetic Data",
                     },
                     legend: {
                         display: false,
@@ -121,45 +432,23 @@
             },
         });
 
-        // Initialize the Sun chart after the component is mounted
-        const sunCanvas = document.getElementById("sunChart");
-        sunChart = new Chart(sunCanvas, {
-            type: "line",
-            data: sunChartData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: "Sun Data",
-                    },
-                    legend: {
-                        display: false,
-                    },
-                },
-            },
-        });
-
-        // Check for magnetic reconnection
-        magneticReconnection = checkMagneticReconnection();
     });
+
+
+
 </script>
 
 <main class="home-container">
     <div class="navbar">
         <div class="navbar-buttons">
-            <button on:click={showSSatellite}> ACE-Satellite </button>
+            <button on:click={showACESatellite}> ACE Satellite </button>
             <button on:click={showDSCOVRSatellite}> DSCOVR Satellite </button>
         </div>
     </div>
 
     <!-- Display the S-Satellite component when clicked -->
-    {#if displaySSatellite}
-        <S_Sat />
+    {#if displayACESatellite}
+        <Ace_Sat />
     {:else}
         <!-- Display the DSCOVR Satellite component when clicked -->
         {#if displayDSCOVRSatellite}
@@ -170,15 +459,15 @@
     <!-- Earth and Sun Data Line Charts -->
     <section class="data-graphs">
         <div class="data-graph">
-            <h2>Earth Data</h2>
-            <canvas id="earthChart" width="400" height="200"></canvas>
+            <h2>Geo-magnet</h2>
+            <canvas id="earthChart" width="400" height="200" />
         </div>
         <div class="data-graph">
-            <h2>Sun Data</h2>
-            <canvas id="sunChart" width="400" height="200"></canvas>
+            <h2>Solar wind</h2>
+            <canvas id="solarWindChart" width="400" height="200" />
         </div>
     </section>
-    
+
     <!-- Magnetic Reconnection Detection -->
     {#if magneticReconnection}
         <p>Magnetic Reconnection Detected!</p>

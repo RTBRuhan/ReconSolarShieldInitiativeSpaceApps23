@@ -6,8 +6,8 @@
     import VChart from "./v_chart.svelte";
 
     let satelliteData = [
-        { name: "DSCOVR", altitude: "1.5 million KM", status: "Active" },
-        { name: "ACE Satellite", altitude: " 1,500,000 km", status: "Active" },
+        { name: "ACE", position: "L1", status: "Active" },
+        { name: "DSCOVR", position: "L1", status: "Active" },
     ];
 
     // Create a variable to track which component to display
@@ -39,15 +39,18 @@
             >
                 Home
             </button>
-            <!-- Button to show the Home component -->
-
+            <!-- Button to show the Chart component -->
             <button
                 on:click={showIndex}
                 style="background-color: #444; font-size: 20px; color: #ffcc00; cursor: pointer;"
             >
                 Visualization Chart
             </button>
-            <!-- Button to show the Chart component -->
+            
+            <!-- Route to Twitter -->
+            <a href="https://twitter.com/RssiSpaceApps23" target="_blank">
+                <i class="fa-brands fa-x-twitter" style="color: #ffcc00;background-color:#444;"></i>
+            </a>
         </div>
     </div>
 
@@ -58,7 +61,7 @@
             {#each satelliteData as satellite}
                 <li>
                     <strong>{satellite.name}:</strong>
-                    {satellite.altitude}, {satellite.status}
+                    {satellite.position}, {satellite.status}
                 </li>
             {/each}
         </ul>
@@ -114,13 +117,17 @@
         margin-right: 10px;
     }
 
-    .navbar-buttons button {
+    .navbar-buttons button ,a {
         border: none;
         font-size: 24px;
         color: #ffcc00;
         cursor: pointer;
         background-color: #444;
         padding: 5px;
+    }
+
+    a {
+        text-decoration: none;
     }
 
     ul {

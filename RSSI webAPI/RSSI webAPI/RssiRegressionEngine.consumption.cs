@@ -15,57 +15,62 @@ namespace RSSI_webAPI
         #region model input class
         public class ModelInput
         {
-            [LoadColumn(0)]
+
+            [LoadColumn(1)]
             [ColumnName(@"year")]
             public float Year { get; set; }
 
-            [LoadColumn(1)]
+            [LoadColumn(2)]
             [ColumnName(@"month")]
             public float Month { get; set; }
 
-            [LoadColumn(2)]
+            [LoadColumn(3)]
             [ColumnName(@"bx_gsm")]
             public float Bx_gsm { get; set; }
 
-            [LoadColumn(3)]
+            [LoadColumn(4)]
             [ColumnName(@"by_gsm")]
             public float By_gsm { get; set; }
 
-            [LoadColumn(4)]
+            [LoadColumn(5)]
             [ColumnName(@"bz_gsm")]
             public float Bz_gsm { get; set; }
 
-            [LoadColumn(5)]
+            [LoadColumn(6)]
             [ColumnName(@"bt")]
             public float Bt { get; set; }
 
-            [LoadColumn(6)]
+            [LoadColumn(7)]
             [ColumnName(@"intensity")]
             public float Intensity { get; set; }
 
-            [LoadColumn(7)]
+            [LoadColumn(8)]
             [ColumnName(@"declination")]
             public float Declination { get; set; }
 
-            [LoadColumn(8)]
+            [LoadColumn(9)]
             [ColumnName(@"inclination")]
             public float Inclination { get; set; }
 
-            [LoadColumn(9)]
+            [LoadColumn(10)]
             [ColumnName(@"north")]
             public float North { get; set; }
 
-            [LoadColumn(10)]
+            [LoadColumn(11)]
             [ColumnName(@"east")]
             public float East { get; set; }
 
-            [LoadColumn(11)]
+            [LoadColumn(12)]
             [ColumnName(@"vertical")]
             public float Vertical { get; set; }
 
-            [LoadColumn(12)]
+            [LoadColumn(13)]
             [ColumnName(@"horizontal")]
             public float Horizontal { get; set; }
+
+            [LoadColumn(14)]
+            [ColumnName(@"class")]
+            public float Class { get; set; }
 
         }
 
@@ -77,6 +82,7 @@ namespace RSSI_webAPI
         #region model output class
         public class ModelOutput
         {
+
             [ColumnName(@"year")]
             public float Year { get; set; }
 
@@ -115,6 +121,9 @@ namespace RSSI_webAPI
 
             [ColumnName(@"horizontal")]
             public float Horizontal { get; set; }
+
+            [ColumnName(@"class")]
+            public float Class { get; set; }
 
             [ColumnName(@"Features")]
             public float[] Features { get; set; }

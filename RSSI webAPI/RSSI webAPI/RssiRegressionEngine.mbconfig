@@ -9,6 +9,14 @@
     "HasHeader": true,
     "ColumnProperties": [
       {
+        "ColumnName": "column1",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 4
+      },
+      {
         "ColumnName": "year",
         "ColumnPurpose": "Feature",
         "ColumnDataFormat": "Single",
@@ -111,6 +119,14 @@
         "IsCategorical": false,
         "Type": "Column",
         "Version": 4
+      },
+      {
+        "ColumnName": "class",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 4
       }
     ]
   },
@@ -126,8 +142,8 @@
         "Version": 1,
         "Type": "Trial",
         "TrainerName": "FastForestRegression",
-        "Score": 0.99999986796695506,
-        "RuntimeInSeconds": 3.252,
+        "Score": 0.44132273710179604,
+        "RuntimeInSeconds": 3.118,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e3",
           "e0": {
@@ -143,7 +159,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "InputColumnNames": [
               "year",
@@ -157,7 +174,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ]
           },
           "e1": {
@@ -173,7 +191,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "OutputColumnName": "Features"
           },
@@ -225,8 +244,8 @@
         "Version": 1,
         "Type": "Trial",
         "TrainerName": "LightGbmRegression",
-        "Score": 0.99999985329227492,
-        "RuntimeInSeconds": 2.839,
+        "Score": 0.42598322046452652,
+        "RuntimeInSeconds": 2.552,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e4",
           "e0": {
@@ -242,7 +261,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "InputColumnNames": [
               "year",
@@ -256,7 +276,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ]
           },
           "e1": {
@@ -272,7 +293,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "OutputColumnName": "Features"
           },
@@ -324,8 +346,8 @@
         "Version": 1,
         "Type": "Trial",
         "TrainerName": "FastTreeRegression",
-        "Score": 0.55753942931141576,
-        "RuntimeInSeconds": 1.594,
+        "Score": -0.50780054793456109,
+        "RuntimeInSeconds": 1.49,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2",
           "e0": {
@@ -341,7 +363,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "InputColumnNames": [
               "year",
@@ -355,7 +378,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ]
           },
           "e1": {
@@ -371,7 +395,8 @@
               "north",
               "east",
               "vertical",
-              "horizontal"
+              "horizontal",
+              "class"
             ],
             "OutputColumnName": "Features"
           },
@@ -431,7 +456,7 @@
     },
     "Schema": "e0 * e1 * (e2 + e3 + e4 + e5 + e6)",
     "MetricName": "RSquared",
-    "ModelFilePath": "D:\\Space Apps Challenge\\2023\\Recon-Solar-Shield-Initiative\\RSSI webAPI\\RSSI webAPI\\RssiRegressionEngine.mlnet"
+    "ModelFilePath": "D:\\Space Apps Challenge\\2023\\ReconSolarShieldInitiativeSpaceApps23\\RSSI webAPI\\RSSI webAPI\\RssiRegressionEngine.mlnet"
   },
   "Type": "TrainingConfig",
   "Version": 4,

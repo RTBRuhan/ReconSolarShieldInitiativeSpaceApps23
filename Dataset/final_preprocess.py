@@ -1,7 +1,6 @@
-import requests
-import csv
-from bs4 import BeautifulSoup
 from io import StringIO
+from bs4 import BeautifulSoup
+import requests
 
 # Space physics data facility
 spdf = "https://omniweb.gsfc.nasa.gov/cgi/nx1.cgi"
@@ -136,3 +135,5 @@ if response.status_code == 200:
     csv_buffer.close()
 else:
     print(f"Form submission failed with status code {response.status_code}")
+
+
